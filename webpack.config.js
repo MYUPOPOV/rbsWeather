@@ -1,7 +1,7 @@
 const path = require('path');
 
 const webpack = require('webpack');
-const bootstrap = require('bootstrap');
+// const bootstrap = require('bootstrap');
 // const $ = require('jquery');
 
 module.exports = {
