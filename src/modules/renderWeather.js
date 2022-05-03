@@ -47,10 +47,12 @@ const renderWeather = () => {
 				let sunset = new Date(parseInt(`${item.sunset}000`));
 
 				console.log(`${weekArray[date.getDay()]}, ${date.getDate()} ${monthArray[date.getMonth()]}`);
-				console.log(`${Math.ceil(item.temp.night)} — ${Math.ceil(item.temp.day)} C`);
+				console.log(`${Math.ceil(item.temp.night)} — ${Math.ceil(item.temp.day)} °C`);
 				console.log(item.weather[0].description[0].toUpperCase() + item.weather[0].description.slice(1));
 				console.log(`Ветер: ${Math.ceil(item.wind_speed)} — ${Math.ceil(item.wind_gust)} м/с`);
-				console.log(`День: ${sunrise.getHours()}:${sunrise.getMinutes()} — ${sunset.getHours()}:${sunset.getMinutes()}`);
+				let sunriseMinutes = sunrise.getMinutes() < 10 ? `0${sunrise.getMinutes()}` : sunrise.getMinutes();
+				let sunsetMinutes = sunset.getMinutes() < 10 ? `0${sunset.getMinutes()}` : sunset.getMinutes();
+				console.log(`День: ${sunrise.getHours()}:${sunriseMinutes} — ${sunset.getHours()}:${sunsetMinutes}`);
 				console.log(`   `);
 			});
 		})
