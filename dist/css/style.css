@@ -26,11 +26,19 @@ body {
 	padding: 0;
 }
 
-.hello {
+.main-block {
   font-style: italic;
-  height: 700px;
+  font-size: 30px;
+  font-weight: 300;
 
+  color: gray;
+  height: 300px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.main-block__string-1 {
+  margin-bottom: 100px;
 }
