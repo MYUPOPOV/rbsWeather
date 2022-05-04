@@ -31,7 +31,7 @@ body {
   font-size: 30px;
   font-weight: 300;
 
-  color: gray;
+  color: rgb(67, 67, 67);
   height: 300px;
   display: flex;
   flex-direction: column;
@@ -47,10 +47,13 @@ body {
 .weather-block {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .weather-block__day {
   font-style: italic;
   border: solid 1px;
+  color: rgb(67, 67, 67);
   margin-top: 50px;
   margin-left: 30px;
   padding: 20px;
