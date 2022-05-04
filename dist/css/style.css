@@ -15,6 +15,10 @@
   font-display: swap;
 }
 
+:root {
+  /* --main-color: rgb(67, 67, 67); */
+  --main-color: #ff0000;
+}
 
 html {
   font-family: 'Roboto';
@@ -31,15 +35,17 @@ body {
   font-size: 30px;
   font-weight: 300;
 
-  color: rgb(67, 67, 67);
-  height: 300px;
+  color: var(---main-color);
+  /* height: 300px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .main-block__string-1 {
+  margin-top: 100px;
   margin-bottom: 100px;
 }
 
@@ -47,16 +53,19 @@ body {
 .weather-block {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
 .weather-block__day {
   font-style: italic;
   border: solid 1px;
-  color: rgb(67, 67, 67);
+  color: var(---main-color);
   margin-top: 50px;
-  margin-left: 30px;
+  /* margin-left: 30px; */
   padding: 20px;
+  /* display: flex;
+  flex-direction: column;
+  align-items:center; */
 }
 
 .weather-block__day__string1 {
@@ -67,4 +76,20 @@ body {
   height: 20px;
   width: 20px;
   margin-right: 20px;
+}
+
+@media (max-width: 1024px) {
+  .main-block {
+    font-style: italic;
+    font-size: 1.1rem;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.weather-block {
+  font-size: 0.9rem;
+}
 }
