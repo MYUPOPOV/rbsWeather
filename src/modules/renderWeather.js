@@ -8,7 +8,7 @@ const renderWeather = () => {
 	string1.style.opacity = 0;
 	string2.style.opacity = 0;
 	string1.textContent = 'Приветствую тебя, друг';
-	string2.textContent = 'Давай я расскажу тебе какая погода будет в городе Владимире';
+	string2.textContent = 'Давай я расскажу тебе какая погода будет во Владимире';
 	const weekArray = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
 	const monthArray = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
 
@@ -29,6 +29,23 @@ const renderWeather = () => {
 		});
 	};
 
+	const renderWeatherBlock = (data) => {
+		data.daily.forEach((item) => {
+			let date = new Date(parseInt(`${item.dt}000`));
+			let sunrise = new Date(parseInt(`${item.sunrise}000`));
+			let sunset = new Date(parseInt(`${item.sunset}000`));
+
+			console.log(`${weekArray[date.getDay()]}, ${date.getDate()} ${monthArray[date.getMonth()]}`);
+			console.log(`${Math.ceil(item.temp.night)} — ${Math.ceil(item.temp.day)} °C`);
+			console.log(item.weather[0].description[0].toUpperCase() + item.weather[0].description.slice(1));
+			console.log(`Ветер: ${Math.ceil(item.wind_speed)} — ${Math.ceil(item.wind_gust)} м/с`);
+			let sunriseMinutes = sunrise.getMinutes() < 10 ? `0${sunrise.getMinutes()}` : sunrise.getMinutes();
+			let sunsetMinutes = sunset.getMinutes() < 10 ? `0${sunset.getMinutes()}` : sunset.getMinutes();
+			console.log(`Светло: ${sunrise.getHours()}:${sunriseMinutes} — ${sunset.getHours()}:${sunsetMinutes}`);
+			console.log(`   `);
+		});
+	};
+
 	// Получаем прогноз от openweathermap.org
 	const getData = () => {
 		return fetch('https://api.openweathermap.org/data/2.5/onecall?lat=56.143063&lon=40.410934&exclude=hourly,minutely&units=metric&lang=ru&appid=2b669c7a2dd43a321c1f550c222bf37b', {
@@ -40,21 +57,7 @@ const renderWeather = () => {
 			return response.json();
 		})
 		.then((data) => {
-			console.log(data);
-			data.daily.forEach((item) => {
-				let date = new Date(parseInt(`${item.dt}000`));
-				let sunrise = new Date(parseInt(`${item.sunrise}000`));
-				let sunset = new Date(parseInt(`${item.sunset}000`));
-
-				console.log(`${weekArray[date.getDay()]}, ${date.getDate()} ${monthArray[date.getMonth()]}`);
-				console.log(`${Math.ceil(item.temp.night)} — ${Math.ceil(item.temp.day)} °C`);
-				console.log(item.weather[0].description[0].toUpperCase() + item.weather[0].description.slice(1));
-				console.log(`Ветер: ${Math.ceil(item.wind_speed)} — ${Math.ceil(item.wind_gust)} м/с`);
-				let sunriseMinutes = sunrise.getMinutes() < 10 ? `0${sunrise.getMinutes()}` : sunrise.getMinutes();
-				let sunsetMinutes = sunset.getMinutes() < 10 ? `0${sunset.getMinutes()}` : sunset.getMinutes();
-				console.log(`День: ${sunrise.getHours()}:${sunriseMinutes} — ${sunset.getHours()}:${sunsetMinutes}`);
-				console.log(`   `);
-			});
+			renderWeatherBlock(data);
 		})
 		.catch((error) => {
 			console.log(error);

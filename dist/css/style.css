@@ -42,3 +42,26 @@ body {
 .main-block__string-1 {
   margin-bottom: 100px;
 }
+
+
+.weather-block {
+  display: flex;
+  flex-direction: row;
+}
+.weather-block__day {
+  font-style: italic;
+  border: solid 1px;
+  margin-top: 50px;
+  margin-left: 30px;
+  padding: 20px;
+}
+
+.weather-block__day__string1 {
+  font-weight: 500;
+}
+
+.weather-block__day img {
+  height: 20px;
+  width: 20px;
+  margin-right: 20px;
+}
