@@ -16,8 +16,7 @@
 }
 
 :root {
-  /* --main-color: rgb(67, 67, 67); */
-  --main-color: #ff0000;
+  --main-color: rgb(67, 67, 67);
 }
 
 html {
@@ -34,8 +33,7 @@ body {
   font-style: italic;
   font-size: 30px;
   font-weight: 300;
-
-  color: var(---main-color);
+  color: var(--main-color);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -59,7 +57,7 @@ body {
 .weather-block__day {
   font-style: italic;
   border: solid 1px;
-  color: var(---main-color);
+  color: var(--main-color);
   margin-top: 20px;
   padding: 20px;
 }
@@ -98,8 +96,11 @@ body {
   margin-top: 0px;
 }
 .weather-block__day {
-  margin-left: 20px;
-  margin-right: 20px;
+  width: 300px;
   margin-top: 20px;
+  padding-left: 30px;
+}
+.weather-block__day__string1 {
+  padding-left: 0;
 }
 }

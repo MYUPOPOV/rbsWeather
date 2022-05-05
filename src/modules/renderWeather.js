@@ -4,7 +4,6 @@ const renderWeather = (time = 2000) => {
 	const string1 = document.querySelector('.main-block__string-1');
 	const string2 = document.querySelector('.main-block__string-2');
 	const stringArray = [string1, string2];
-	// const time = 2000;
 	string1.style.opacity = 0;
 	string2.style.opacity = 0;
 	string1.textContent = 'Приветствую тебя, друг';
@@ -55,12 +54,12 @@ const renderWeather = (time = 2000) => {
 				'.weather-block__day__string5'
 			).innerHTML = ` <img src="./images/sunrise.png"><span>${sunrise.getHours()}:${sunriseMinutes} — ${sunset.getHours()}:${sunsetMinutes}</span>`;
 
-			console.log(`${weekArray[date.getDay()]}, ${date.getDate()} ${monthArray[date.getMonth()]}`);
-			console.log(`${Math.ceil(item.temp.night)} — ${Math.ceil(item.temp.day)} °C`);
-			console.log(item.weather[0].description[0].toUpperCase() + item.weather[0].description.slice(1));
-			console.log(`Ветер: ${Math.ceil(item.wind_speed)} — ${Math.ceil(item.wind_gust)} м/с`);
-			console.log(`Светло: ${sunrise.getHours()}:${sunriseMinutes} — ${sunset.getHours()}:${sunsetMinutes}`);
-			console.log(`   `);
+			// console.log(`${weekArray[date.getDay()]}, ${date.getDate()} ${monthArray[date.getMonth()]}`);
+			// console.log(`${Math.ceil(item.temp.night)} — ${Math.ceil(item.temp.day)} °C`);
+			// console.log(item.weather[0].description[0].toUpperCase() + item.weather[0].description.slice(1));
+			// console.log(`Ветер: ${Math.ceil(item.wind_speed)} — ${Math.ceil(item.wind_gust)} м/с`);
+			// console.log(`Светло: ${sunrise.getHours()}:${sunriseMinutes} — ${sunset.getHours()}:${sunsetMinutes}`);
+			// console.log(`   `);
 		}
 	};
 
