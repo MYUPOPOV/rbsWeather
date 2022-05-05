@@ -1,3 +1,3 @@
 import renderWeather from './modules/renderWeather';
 
-renderWeather();
+renderWeather(1000);

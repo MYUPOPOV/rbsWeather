@@ -1,10 +1,10 @@
 import { animate } from './helpers';
 
-const renderWeather = () => {
+const renderWeather = (time = 2000) => {
 	const string1 = document.querySelector('.main-block__string-1');
 	const string2 = document.querySelector('.main-block__string-2');
 	const stringArray = [string1, string2];
-	const time = 2000;
+	// const time = 2000;
 	string1.style.opacity = 0;
 	string2.style.opacity = 0;
 	string1.textContent = 'Приветствую тебя, друг';
@@ -84,7 +84,7 @@ const renderWeather = () => {
 	animateItemAppear(stringArray, 0, time);
 	setTimeout(() => {
 		animateItemAppear(dayBlocks, 0, time);
-	}, 4000);
+	}, time * 2);
 };
 
 export default renderWeather;
