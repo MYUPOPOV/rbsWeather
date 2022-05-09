@@ -15,6 +15,8 @@ const renderWeather = (time = 2000) => {
 	let lon = 40.410934;
 	let place = 'город Владимир';
 
+	let delay = 3;
+
 	function init() {
 		var myPlacemark,
 			myMap = new ymaps.Map(
@@ -45,6 +47,8 @@ const renderWeather = (time = 2000) => {
 				});
 			}
 			getAddress(coords);
+
+			// getData(lat, lon, place) // ОТРИСОВЫВАЕМ ПОГОДУ
 		});
 		// Создание метки.
 		function createPlacemark(coords) {
@@ -84,6 +88,10 @@ const renderWeather = (time = 2000) => {
 
 	// Анимация появления объектов
 	const animateItemAppear = (item, index, time = 2000) => {
+		item.forEach((item) => {
+			item.style.opacity = 0;
+		});
+
 		animate({
 			duration: time,
 			timing(timeFraction) {
@@ -103,9 +111,9 @@ const renderWeather = (time = 2000) => {
 	const renderHello = () => {
 		const stringArray = [string1, string2, map];
 
-		stringArray.forEach((item) => {
-			item.style.opacity = 0;
-		});
+		// stringArray.forEach((item) => {
+		// 	item.style.opacity = 0;
+		// });
 		string1.textContent = 'Приветствую тебя, друг';
 		string2.textContent = 'Выбери точку на карте, и я покажу тебе погоду на неделю для этого места';
 
@@ -116,9 +124,9 @@ const renderWeather = (time = 2000) => {
 	const renderWeatherBlock = (data, place) => {
 		const daysArray = [string3, ...dayBlocks];
 
-		daysArray.forEach((item) => {
-			item.style.opacity = 0;
-		});
+		// daysArray.forEach((item) => {
+		// 	item.style.opacity = 0;
+		// });
 
 		string3.textContent = `Сейчас выбран: ${place}`;
 
@@ -145,7 +153,9 @@ const renderWeather = (time = 2000) => {
 
 		setTimeout(() => {
 			animateItemAppear(daysArray, 0, time);
-		}, time * 3);
+		}, time * delay);
+
+		delay = 1;
 	};
 
 	// Получаем прогноз от openweathermap.org
