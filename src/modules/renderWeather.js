@@ -10,12 +10,12 @@ const renderWeather = (time = 2000) => {
 	const monthArray = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
 	const dayBlocks = document.querySelectorAll('.weather-block__day');
 
-	let coords;
-	let lat = 56.143063;
-	let lon = 40.410934;
-	let place = 'город Владимир';
+	// let interval;
 
-	let delay = 3;
+	// let coords;
+	// let lat = 56.143063;
+	// let lon = 40.410934;
+	// let place = 'город Владимир';
 
 	function init() {
 		var myPlacemark,
@@ -32,7 +32,7 @@ const renderWeather = (time = 2000) => {
 		// Слушаем клик на карте.
 		myMap.events.add('click', function (e) {
 			coords = e.get('coords');
-			console.log('~ coords', coords); // ПОКАЗЫВАЕМ КООРДИНАТЫ
+
 			// Если метка уже создана – просто передвигаем ее.
 			if (myPlacemark) {
 				myPlacemark.geometry.setCoordinates(coords);
@@ -40,6 +40,7 @@ const renderWeather = (time = 2000) => {
 			// Если нет – создаем.
 			else {
 				myPlacemark = createPlacemark(coords);
+
 				myMap.geoObjects.add(myPlacemark);
 				// Слушаем событие окончания перетаскивания на метке.
 				myPlacemark.events.add('dragend', function () {
@@ -47,6 +48,24 @@ const renderWeather = (time = 2000) => {
 				});
 			}
 			getAddress(coords);
+
+			// console.log('~ coords', coords[0], coords[1]); // ПОКАЗЫВАЕМ КООРДИНАТЫ
+			// console.log('~ 	myPlacemark', myPlacemark.properties._data.balloonContent);
+
+			// myPlacemark.properties._data.iconCaption
+
+			// getData(lat, lon, place)
+			// .then((response) => {
+			//   return response.json();
+			// })
+			// .then((data) => {
+			//   // setTimeout(() => {
+			//   renderWeatherBlock(data, place);
+			//   // }, time * delay);
+			// })
+			// .catch((error) => {
+			//   console.log(error);
+			// });
 
 			// getData(lat, lon, place) // ОТРИСОВЫВАЕМ ПОГОДУ
 		});
@@ -82,16 +101,36 @@ const renderWeather = (time = 2000) => {
 					// В качестве контента балуна задаем строку с адресом объекта.
 					balloonContent: firstGeoObject.getAddressLine(),
 				});
+
+				getData(coords[0], coords[1])
+					.then((response) => {
+						return response.json();
+					})
+					.then((data) => {
+						// setTimeout(() => {
+						renderWeatherBlock(data, firstGeoObject.getAddressLine());
+						// }, time * delay);
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+
+				// getData(lat, lon, place) // ОТРИСОВЫВАЕМ ПОГОДУ
+
+				// console.log(coords);
+				// console.log(firstGeoObject.getAddressLine());
 			});
 		}
 	}
 
-	// Анимация появления объектов
-	const animateItemAppear = (item, index, time = 2000) => {
-		item.forEach((item) => {
+	const clearAnimateItems = (items) => {
+		items.forEach((item) => {
 			item.style.opacity = 0;
 		});
+	};
 
+	// Анимация появления объектов
+	const animateItemAppear = (item, index, time = 2000) => {
 		animate({
 			duration: time,
 			timing(timeFraction) {
@@ -109,8 +148,6 @@ const renderWeather = (time = 2000) => {
 
 	// Рендерим приетственный блок
 	const renderHello = () => {
-		const stringArray = [string1, string2, map];
-
 		// stringArray.forEach((item) => {
 		// 	item.style.opacity = 0;
 		// });
@@ -123,14 +160,17 @@ const renderWeather = (time = 2000) => {
 	// Рендерим блок погоды
 	const renderWeatherBlock = (data, place) => {
 		const daysArray = [string3, ...dayBlocks];
+		console.log('~ daysArray', daysArray);
 
+		clearAnimateItems(daysArray);
+		// clearInterval(interval)
 		// daysArray.forEach((item) => {
 		// 	item.style.opacity = 0;
 		// });
 
 		string3.textContent = `Сейчас выбран: ${place}`;
 
-		for (let i = 0; i < 8; i++) {
+		for (let i = 1; i < 8; i++) {
 			const item = data.daily[i];
 			const date = new Date(parseInt(`${item.dt}000`));
 			const sunrise = new Date(parseInt(`${item.sunrise}000`));
@@ -138,24 +178,24 @@ const renderWeather = (time = 2000) => {
 			const sunriseMinutes = sunrise.getMinutes() < 10 ? `0${sunrise.getMinutes()}` : sunrise.getMinutes();
 			const sunsetMinutes = sunset.getMinutes() < 10 ? `0${sunset.getMinutes()}` : sunset.getMinutes();
 
-			dayBlocks[i].querySelector('.weather-block__day__string1').innerHTML = `<u>${weekArray[date.getDay()]}, ${date.getDate()} ${monthArray[date.getMonth()]}</u>`;
+			daysArray[i].querySelector('.weather-block__day__string1').innerHTML = `<u>${weekArray[date.getDay()]}, ${date.getDate()} ${monthArray[date.getMonth()]}</u>`;
 
-			dayBlocks[i].querySelector('.weather-block__day__string2').innerHTML = `<img src="./images/temperature.png"><span>${Math.ceil(item.temp.night)} — ${Math.ceil(item.temp.day)} °C</span>`;
+			daysArray[i].querySelector('.weather-block__day__string2').innerHTML = `<img src="./images/temperature.png"><span>${Math.ceil(item.temp.night)} — ${Math.ceil(item.temp.day)} °C</span>`;
 
-			dayBlocks[i].querySelector('.weather-block__day__string3').innerHTML = item.weather[0].description[0].toUpperCase() + item.weather[0].description.slice(1);
+			daysArray[i].querySelector('.weather-block__day__string3').innerHTML = item.weather[0].description[0].toUpperCase() + item.weather[0].description.slice(1);
 
-			dayBlocks[i].querySelector('.weather-block__day__string4').innerHTML = ` <img src="./images/wind.png"><span>${Math.ceil(item.wind_speed)} — ${Math.ceil(item.wind_gust)} м/с</span>`;
+			daysArray[i].querySelector('.weather-block__day__string4').innerHTML = ` <img src="./images/wind.png"><span>${Math.ceil(item.wind_speed)} — ${Math.ceil(item.wind_gust)} м/с</span>`;
 
-			dayBlocks[i].querySelector(
+			daysArray[i].querySelector(
 				'.weather-block__day__string5'
 			).innerHTML = ` <img src="./images/sunrise.png"><span>${sunrise.getHours()}:${sunriseMinutes} — ${sunset.getHours()}:${sunsetMinutes}</span>`;
 		}
 
-		setTimeout(() => {
-			animateItemAppear(daysArray, 0, time);
-		}, time * delay);
+		animateItemAppear(daysArray, 0, time);
 
-		delay = 1;
+		// setTimeout(() => {
+		// 	animateItemAppear(daysArray, 0, time);
+		// }, 5000);
 	};
 
 	// Получаем прогноз от openweathermap.org
@@ -168,18 +208,22 @@ const renderWeather = (time = 2000) => {
 	// Блок выполнения
 	ymaps.ready(init);
 
+	const stringArray = [string1, string2, map];
+	clearAnimateItems(stringArray);
 	renderHello();
 
-	getData(lat, lon, place)
-		.then((response) => {
-			return response.json();
-		})
-		.then((data) => {
-			renderWeatherBlock(data, place);
-		})
-		.catch((error) => {
-			console.log(error);
-		});
+	// getData(lat, lon, place)
+	// 	.then((response) => {
+	// 		return response.json();
+	// 	})
+	// 	.then((data) => {
+	// 		// setTimeout(() => {
+	// 		renderWeatherBlock(data, place);
+	// 		// }, time * delay);
+	// 	})
+	// 	.catch((error) => {
+	// 		console.log(error);
+	// 	});
 };
 
 export default renderWeather;

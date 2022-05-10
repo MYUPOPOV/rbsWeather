@@ -30,7 +30,7 @@ html, body {
   padding: 0; */
   /* font-family: Arial; */
   font-family: 'Roboto';
-  font-size: 14px;
+  font-size: 12px;
   box-sizing: border-box;
 	margin: 0;
 	padding: 0;
@@ -82,6 +82,7 @@ html, body {
   color: var(--main-color);
   margin-top: 20px;
   padding: 20px;
+  /* opacity:0; */
 }
 
 .weather-block__day__string1 {
