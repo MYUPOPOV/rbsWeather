@@ -10,13 +10,6 @@ const renderWeather = (time = 2000) => {
 	const monthArray = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
 	const dayBlocks = document.querySelectorAll('.weather-block__day');
 
-	// let interval;
-
-	// let coords;
-	// let lat = 56.143063;
-	// let lon = 40.410934;
-	// let place = 'город Владимир';
-
 	function init() {
 		var myPlacemark,
 			myMap = new ymaps.Map(
@@ -31,7 +24,7 @@ const renderWeather = (time = 2000) => {
 			);
 		// Слушаем клик на карте.
 		myMap.events.add('click', function (e) {
-			coords = e.get('coords');
+			var coords = e.get('coords');
 
 			// Если метка уже создана – просто передвигаем ее.
 			if (myPlacemark) {
@@ -48,26 +41,6 @@ const renderWeather = (time = 2000) => {
 				});
 			}
 			getAddress(coords);
-
-			// console.log('~ coords', coords[0], coords[1]); // ПОКАЗЫВАЕМ КООРДИНАТЫ
-			// console.log('~ 	myPlacemark', myPlacemark.properties._data.balloonContent);
-
-			// myPlacemark.properties._data.iconCaption
-
-			// getData(lat, lon, place)
-			// .then((response) => {
-			//   return response.json();
-			// })
-			// .then((data) => {
-			//   // setTimeout(() => {
-			//   renderWeatherBlock(data, place);
-			//   // }, time * delay);
-			// })
-			// .catch((error) => {
-			//   console.log(error);
-			// });
-
-			// getData(lat, lon, place) // ОТРИСОВЫВАЕМ ПОГОДУ
 		});
 		// Создание метки.
 		function createPlacemark(coords) {
@@ -114,11 +87,6 @@ const renderWeather = (time = 2000) => {
 					.catch((error) => {
 						console.log(error);
 					});
-
-				// getData(lat, lon, place) // ОТРИСОВЫВАЕМ ПОГОДУ
-
-				// console.log(coords);
-				// console.log(firstGeoObject.getAddressLine());
 			});
 		}
 	}
@@ -148,9 +116,6 @@ const renderWeather = (time = 2000) => {
 
 	// Рендерим приетственный блок
 	const renderHello = () => {
-		// stringArray.forEach((item) => {
-		// 	item.style.opacity = 0;
-		// });
 		string1.textContent = 'Приветствую тебя, друг';
 		string2.textContent = 'Выбери точку на карте, и я покажу тебе погоду на неделю для этого места';
 
@@ -163,12 +128,8 @@ const renderWeather = (time = 2000) => {
 		console.log('~ daysArray', daysArray);
 
 		clearAnimateItems(daysArray);
-		// clearInterval(interval)
-		// daysArray.forEach((item) => {
-		// 	item.style.opacity = 0;
-		// });
 
-		string3.textContent = `Сейчас выбран: ${place}`;
+		string3.textContent = `Сейчас выбрано: ${place}`;
 
 		for (let i = 1; i < 8; i++) {
 			const item = data.daily[i];
@@ -192,10 +153,6 @@ const renderWeather = (time = 2000) => {
 		}
 
 		animateItemAppear(daysArray, 0, time);
-
-		// setTimeout(() => {
-		// 	animateItemAppear(daysArray, 0, time);
-		// }, 5000);
 	};
 
 	// Получаем прогноз от openweathermap.org
@@ -211,19 +168,6 @@ const renderWeather = (time = 2000) => {
 	const stringArray = [string1, string2, map];
 	clearAnimateItems(stringArray);
 	renderHello();
-
-	// getData(lat, lon, place)
-	// 	.then((response) => {
-	// 		return response.json();
-	// 	})
-	// 	.then((data) => {
-	// 		// setTimeout(() => {
-	// 		renderWeatherBlock(data, place);
-	// 		// }, time * delay);
-	// 	})
-	// 	.catch((error) => {
-	// 		console.log(error);
-	// 	});
 };
 
 export default renderWeather;
