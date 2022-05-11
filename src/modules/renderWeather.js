@@ -75,6 +75,7 @@ const renderWeather = (time = 2000) => {
 					balloonContent: firstGeoObject.getAddressLine(),
 				});
 
+				// timeFraction = 2;
 				getData(coords[0], coords[1])
 					.then((response) => {
 						return response.json();
@@ -125,7 +126,6 @@ const renderWeather = (time = 2000) => {
 	// Рендерим блок погоды
 	const renderWeatherBlock = (data, place) => {
 		const daysArray = [string3, ...dayBlocks];
-		console.log('~ daysArray', daysArray);
 
 		clearAnimateItems(daysArray);
 
